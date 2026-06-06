@@ -1,0 +1,108 @@
+@import "tailwindcss";
+
+@theme {
+  --color-base: #080C18;
+  --color-surface: #0F1624;
+  --color-raised: #161F30;
+  --color-border: #1E293B;
+
+  --color-accent-blue: #3B82F6;
+  --color-accent-red: #EF4444;
+  --color-accent-amber: #F59E0B;
+  --color-accent-green: #10B981;
+  --color-accent-purple: #8B5CF6;
+
+  --color-text-primary: #F1F5F9;
+  --color-text-secondary: #64748B;
+  --color-text-muted: #475569;
+
+  --font-inter: 'Inter', sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-base text-text-primary font-inter m-0 p-0 overflow-x-hidden antialiased;
+  }
+}
+
+@layer components {
+  .section-container {
+    @apply max-w-6xl mx-auto px-6 py-16;
+  }
+  
+  .section-title {
+    @apply text-2xl font-bold mb-2 tracking-tight;
+  }
+  
+  .section-subtitle {
+    @apply text-text-secondary mb-8;
+  }
+
+  .card {
+    @apply bg-surface border border-border rounded-xl p-5;
+  }
+
+  /* Badge Styles */
+  .badge {
+    @apply inline-block px-2.5 py-1 text-xs font-bold tracking-wider rounded-sm uppercase;
+  }
+  .badge-safe { @apply bg-[rgba(16,185,129,0.15)] text-accent-green; }
+  .badge-caution { @apply bg-[rgba(245,158,11,0.15)] text-accent-amber; }
+  .badge-danger { @apply bg-[rgba(239,68,68,0.15)] text-accent-red; }
+  .badge-anomaly { @apply bg-[rgba(139,92,246,0.15)] text-accent-purple; }
+
+  /* Gap Badge Styles */
+  .gap-badge {
+    @apply inline-block px-2 py-0.5 text-xs font-bold rounded-sm whitespace-nowrap;
+  }
+  .gap-badge-positive { @apply bg-[rgba(239,68,68,0.15)] text-accent-red border border-[rgba(239,68,68,0.3)]; }
+  .gap-badge-negative { @apply bg-[rgba(16,185,129,0.15)] text-accent-green border border-[rgba(16,185,129,0.3)]; }
+  .gap-badge-neutral { @apply bg-[rgba(148,163,184,0.1)] text-text-secondary border border-transparent; }
+}
+
+/* Animations */
+@keyframes pulse-ring {
+  0% { transform: scale(0.8); opacity: 0.8; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+
+.marker-pulse-ring {
+  animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+  border-radius: 50%;
+  border: 2px solid theme('colors.accent.amber');
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  margin-top: -50%;
+  margin-left: -50%;
+  pointer-events: none;
+}
+
+/* Leaflet Overrides */
+.leaflet-container {
+  background: var(--color-base) !important;
+  font-family: 'Inter', sans-serif;
+}
+.leaflet-popup-content-wrapper {
+  background: var(--color-surface) !important;
+  color: var(--color-text-primary) !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: 0.75rem !important;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5) !important;
+}
+.leaflet-popup-tip {
+  background: var(--color-surface) !important;
+  border-top: 1px solid var(--color-border) !important;
+  border-left: 1px solid var(--color-border) !important;
+}
+.leaflet-container a.leaflet-popup-close-button {
+  color: var(--color-text-secondary) !important;
+  padding: 4px !important;
+}
+.leaflet-control-zoom a {
+  background: var(--color-raised) !important;
+  color: var(--color-text-primary) !important;
+  border-color: var(--color-border) !important;
+}

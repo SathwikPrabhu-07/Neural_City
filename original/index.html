@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>State of Indian Streets 2026 — Road Safety Insights | Neural City</title>
+  <meta name="description" content="How safe are India's best-looking streets? A data-driven prototype layering NCRB road accident data over Neural City's AI-powered street quality rankings." />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <!-- ================================================================== -->
+  <!-- HEADER                                                             -->
+  <!-- ================================================================== -->
+  <header class="header">
+    <div class="container">
+      <div class="header-badge">
+        <span class="dot"></span>
+        Product Engineering Prototype
+      </div>
+      <h1>
+        <span class="highlight-blue">Neural City</span>
+        <span class="highlight-cross">×</span>
+        <span class="highlight-red">Road Safety</span>
+        Insights
+      </h1>
+      <p class="header-sub">
+        How safe are India's best-looking streets? We layered NCRB 2023 road accident data
+        over Neural City's AI-powered street quality rankings to find cities where appearances
+        can be deceiving.
+      </p>
+    </div>
+  </header>
+
+  <!-- ================================================================== -->
+  <!-- STICKY NAVIGATION                                                  -->
+  <!-- ================================================================== -->
+  <nav class="nav" id="main-nav">
+    <div class="container nav-inner">
+      <a href="#hero" class="nav-link active">Overview</a>
+      <a href="#leaderboard" class="nav-link">Leaderboard</a>
+      <a href="#gap-analysis" class="nav-link">Gap Analysis</a>
+      <a href="#sri" class="nav-link">Street Reality Index</a>
+      <a href="#analytics" class="nav-link">Visual Analytics</a>
+      <a href="#methodology" class="nav-link">Methodology</a>
+    </div>
+  </nav>
+
+  <!-- ================================================================== -->
+  <!-- HERO STATS                                                         -->
+  <!-- ================================================================== -->
+  <section id="hero" class="section">
+    <div class="container">
+      <div id="hero-stats" class="stat-strip">
+        <!-- Populated by app.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================== -->
+  <!-- FEATURE 1 — LEADERBOARD                                           -->
+  <!-- ================================================================== -->
+  <section id="leaderboard" class="section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-header__eyebrow section-header__eyebrow--blue">Feature 1</div>
+        <h2>Safety Leaderboard</h2>
+        <p>10 Neural City ranked cities, now measured against real-world road safety outcomes from NCRB 2023. Click any column header to sort.</p>
+      </div>
+
+      <div class="table-wrapper">
+        <table class="leaderboard-table" id="leaderboard-table">
+          <thead>
+            <tr>
+              <th data-sort="sri" class="sorted">Rank <span class="sort-arrow">↓</span></th>
+              <th data-sort="displayName">City <span class="sort-arrow">↕</span></th>
+              <th data-sort="ncScore">NC Score <span class="sort-arrow">↕</span></th>
+              <th data-sort="cases">Cases <span class="sort-arrow">↕</span></th>
+              <th data-sort="died">Deaths <span class="sort-arrow">↕</span></th>
+              <th data-sort="fatalityRate">FR% <span class="sort-arrow">↕</span></th>
+              <th data-sort="sos">SOS <span class="sort-arrow">↕</span></th>
+              <th data-sort="sri">SRI <span class="sort-arrow">↕</span></th>
+              <th>Tier</th>
+              <th data-sort="gapScore">Gap <span class="sort-arrow">↕</span></th>
+            </tr>
+          </thead>
+          <tbody id="leaderboard-tbody">
+            <!-- Populated by app.js -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================== -->
+  <!-- FEATURE 2 — GAP ANALYSIS                                          -->
+  <!-- ================================================================== -->
+  <section id="gap-analysis" class="section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-header__eyebrow section-header__eyebrow--amber">Feature 2</div>
+        <h2>Safety Gap Analysis</h2>
+        <p>Where do beautiful streets hide dangerous roads? These cities show the largest divergence between Neural City's street quality rankings and actual road safety outcomes.</p>
+      </div>
+
+      <div class="gap-grid">
+        <div>
+          <div class="gap-col-title gap-col-title--danger">⚠ High Risk Gaps</div>
+          <div id="gap-danger-cards" style="display:flex;flex-direction:column;gap:16px">
+            <!-- Populated by app.js -->
+          </div>
+        </div>
+        <div>
+          <div class="gap-col-title gap-col-title--safe">✓ Safe Surprises</div>
+          <div id="gap-safe-cards" style="display:flex;flex-direction:column;gap:16px">
+            <!-- Populated by app.js -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Quadrant Chart (Chart A) -->
+      <div class="chart-container chart-container--full" style="margin-top:32px">
+        <div class="chart-container__title">Safety Gap Quadrant</div>
+        <div class="chart-container__subtitle">Each city plotted by its Neural City street quality score (X) vs. its real-world safety outcome (Y). The bottom-right quadrant reveals cities where great-looking streets mask higher accident fatality rates.</div>
+        <div class="chart-canvas-wrapper">
+          <canvas id="chart-quadrant"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================== -->
+  <!-- FEATURE 3 — STREET REALITY INDEX                                   -->
+  <!-- ================================================================== -->
+  <section id="sri" class="section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-header__eyebrow section-header__eyebrow--purple">Feature 3</div>
+        <h2>Street Reality Index (SRI)</h2>
+        <p>A composite metric that blends Neural City's street quality assessment with real-world safety data. This is what a holistic city ranking could look like.</p>
+      </div>
+
+      <!-- Formula Box -->
+      <div class="formula-box">
+        <h3>SRI Formula</h3>
+        <div class="formula-code">
+SRI = 0.40 × NC_Score + 0.60 × SOS<br><br>
+where SOS = 100 × (FR_max − FR_city) / (FR_max − FR_min)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FR  = (Deaths / Cases) × 100
+        </div>
+        <ul class="formula-notes">
+          <li><strong>NC_Score (40%)</strong> — Neural City's AI-assessed street quality (cleanliness, walkability, road quality, etc.)</li>
+          <li><strong>SOS (60%)</strong> — Safety Outcome Score. Min-max normalized, inverted fatality rate. Higher = safer.</li>
+          <li><strong>Weight rationale:</strong> Safety outcomes are weighted 1.5× over aesthetics because a street that kills people isn't truly high-quality, regardless of how it looks.</li>
+          <li><strong>Mumbai excluded</strong> from SOS/SRI computation due to 100% fatality rate data anomaly.</li>
+        </ul>
+      </div>
+
+      <!-- SRI Ranked Cards -->
+      <div id="sri-cards" class="sri-grid">
+        <!-- Populated by app.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================== -->
+  <!-- FEATURE 4 — VISUAL ANALYTICS                                       -->
+  <!-- ================================================================== -->
+  <section id="analytics" class="section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-header__eyebrow section-header__eyebrow--cyan">Feature 4</div>
+        <h2>Visual Analytics</h2>
+        <p>Three comparative visualizations that reveal patterns, outliers, and the true shape of India's urban road safety landscape.</p>
+      </div>
+
+      <div class="chart-grid">
+        <!-- Chart B: Fatality Rate -->
+        <div class="chart-container">
+          <div class="chart-container__title">Fatality Rate by City</div>
+          <div class="chart-container__subtitle">Percentage of reported road accidents that resulted in death. Mumbai excluded (data anomaly).</div>
+          <div class="chart-canvas-wrapper">
+            <canvas id="chart-fatality"></canvas>
+          </div>
+        </div>
+
+        <!-- Chart C: NC Score vs SRI -->
+        <div class="chart-container">
+          <div class="chart-container__title">NC Score vs. Street Reality Index</div>
+          <div class="chart-container__subtitle">See how rankings shift when safety data is factored in. Blue = street quality only. Purple = composite score.</div>
+          <div class="chart-canvas-wrapper">
+            <canvas id="chart-nc-sri"></canvas>
+          </div>
+        </div>
+
+        <!-- Chart D: Bubble — All NCRB Cities -->
+        <div class="chart-container chart-container--full">
+          <div class="chart-container__title">NCRB 2023 — All 53 Cities</div>
+          <div class="chart-container__subtitle">Cases Reported vs. Persons Died across every NCRB-listed city. Neural City matched cities are highlighted in blue. Red markers indicate data reporting anomalies. Bubble size ∝ deaths.</div>
+          <div class="chart-canvas-wrapper">
+            <canvas id="chart-bubble"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Anomaly Callouts -->
+      <div class="anomaly-callout">
+        <div class="anomaly-card">
+          <div class="anomaly-card__title">⚠ Mumbai Data Anomaly</div>
+          <div class="anomaly-card__stat">414 / 414</div>
+          <div class="anomaly-card__text">
+            Mumbai reports exactly 414 cases and 414 deaths — a 100% fatality rate.
+            This strongly suggests the city's "Cases Reported" field counts only fatal accidents,
+            not the total accident count. Mumbai's 1,924 injured persons indicate far more incidents
+            actually occurred. Excluded from fatality rate comparisons.
+          </div>
+        </div>
+        <div class="anomaly-card">
+          <div class="anomaly-card__title">⚠ Agra Statistical Outlier</div>
+          <div class="anomaly-card__stat">89.5%</div>
+          <div class="anomaly-card__text">
+            Agra reports 528 deaths from 590 cases — an 89.5% fatality rate — the highest
+            among non-matched cities. While included in the NCRB bubble chart, this extreme
+            rate likely reflects reporting methodology differences rather than genuinely
+            catastrophic road conditions.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================== -->
+  <!-- METHODOLOGY                                                        -->
+  <!-- ================================================================== -->
+  <section id="methodology" class="section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-header__eyebrow section-header__eyebrow--cyan">Transparency</div>
+        <h2>Methodology &amp; Assumptions</h2>
+        <p>Every data decision, limitation, and assumption documented for full transparency and reproducibility.</p>
+      </div>
+
+      <div class="methodology-grid">
+        <!-- Data Sources -->
+        <div class="methodology-card">
+          <h3>📊 Data Sources</h3>
+          <ul>
+            <li><strong>Neural City SEM 2026</strong> — AI-based street quality scores for India's top 11 cities (cleanliness, walkability, road quality, dust control, encroachment, aesthetics).</li>
+            <li><strong>NCRB 2023</strong> — National Crime Records Bureau city-level road accident statistics: cases reported, persons injured, and persons died across 53 major Indian cities.</li>
+          </ul>
+        </div>
+
+        <!-- Matching Logic -->
+        <div class="methodology-card">
+          <h3>🔗 City Matching</h3>
+          <ul>
+            <li>11 Neural City rankings → 10 matched with NCRB city entries.</li>
+            <li><strong>Gurgaon (#3, NC 48.8)</strong> excluded — no NCRB city-level data available. Gurgaon likely falls under Haryana's aggregate reporting.</li>
+            <li>Vizag (Neural City) → Vishakhapatnam (NCRB)</li>
+            <li>Delhi (Neural City) → Delhi (City) in NCRB, excluding total Delhi UT.</li>
+          </ul>
+        </div>
+
+        <!-- Assumptions -->
+        <div class="methodology-card">
+          <h3>📌 Assumptions</h3>
+          <ul>
+            <li>Neural City scores are taken as published. No reverse-engineering of sub-scores.</li>
+            <li>NCRB 2023 data is the most recent available and is used as-is.</li>
+            <li>Fatality Rate (Deaths ÷ Cases × 100) is treated as a valid single-metric proxy for road safety outcomes.</li>
+            <li>The 3-year gap between NC 2026 and NCRB 2023 is acknowledged but accepted for this prototype.</li>
+            <li>No population normalization — all metrics are case-based rates, not per-capita.</li>
+          </ul>
+        </div>
+
+        <!-- Limitations -->
+        <div class="methodology-card">
+          <h3>⚠️ Known Limitations</h3>
+          <ul>
+            <li><strong>Year mismatch:</strong> NC 2026 vs. NCRB 2023 (3-year gap).</li>
+            <li><strong>Mumbai anomaly:</strong> 100% FR is a reporting artifact, not a real-world measure.</li>
+            <li><strong>Reporting variation:</strong> "Cases Reported" definitions may vary across state police systems.</li>
+            <li><strong>30-day rule:</strong> India counts road deaths within 30 days of the accident — state compliance varies.</li>
+            <li><strong>No population data:</strong> Raw counts favour smaller cities with lower absolute numbers.</li>
+            <li><strong>10-city scope:</strong> Only covers the overlap between two specific datasets.</li>
+          </ul>
+        </div>
+
+        <!-- City Match Table -->
+        <div class="methodology-card methodology-card--full">
+          <h3>🏙️ City Matching Reference</h3>
+          <table class="methodology-table">
+            <thead>
+              <tr>
+                <th>NC Rank</th>
+                <th>Neural City Name</th>
+                <th>NC Score</th>
+                <th>NCRB Name</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>#1</td><td>Bengaluru</td><td>49.2</td><td>BENGALURU</td><td>✅ Matched</td></tr>
+              <tr><td>#2</td><td>Ahmedabad</td><td>49.0</td><td>AHMEDABAD</td><td>✅ Matched</td></tr>
+              <tr><td>#3</td><td>Gurgaon</td><td>48.8</td><td>—</td><td>❌ No NCRB entry</td></tr>
+              <tr><td>#4</td><td>Vizag</td><td>48.8</td><td>VISHAKHAPATNAM</td><td>✅ Matched</td></tr>
+              <tr><td>#5</td><td>Lucknow</td><td>48.4</td><td>LUCKNOW</td><td>✅ Matched</td></tr>
+              <tr><td>#6</td><td>Hyderabad</td><td>47.6</td><td>HYDERABAD</td><td>✅ Matched</td></tr>
+              <tr><td>#7</td><td>Indore</td><td>47.2</td><td>INDORE</td><td>✅ Matched</td></tr>
+              <tr><td>#8</td><td>Chennai</td><td>46.5</td><td>CHENNAI</td><td>✅ Matched</td></tr>
+              <tr><td>#9</td><td>NCT of Delhi</td><td>46.3</td><td>DELHI (CITY)</td><td>✅ Matched</td></tr>
+              <tr><td>#10</td><td>Mumbai</td><td>45.7</td><td>MUMBAI</td><td>⚠️ Anomaly</td></tr>
+              <tr><td>#11</td><td>Surat</td><td>45.6</td><td>SURAT</td><td>✅ Matched</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================== -->
+  <!-- FOOTER                                                             -->
+  <!-- ================================================================== -->
+  <footer class="footer">
+    <div class="container">
+      <p>
+        Neural City × Road Safety Insights — Product Engineering Prototype<br />
+        Data: <a href="https://ncrb.gov.in" target="_blank" rel="noopener">NCRB 2023</a> ×
+        <a href="https://neuralcity.in" target="_blank" rel="noopener">Neural City SEM 2026</a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>

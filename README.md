@@ -7,6 +7,12 @@ An interactive civic-tech analytics platform that extends Neural City's **State 
 **Prototype:** https://neural-city-nu.vercel.app/
 
 ---
+## Sample Screenshots from the hosted link
+<img width="1263" height="743" alt="image" src="https://github.com/user-attachments/assets/b07daa8a-028d-4c30-abdd-3d7cccbe06cc" />
+<img width="1157" height="846" alt="image" src="https://github.com/user-attachments/assets/1e5fd39f-c23a-4fb2-8136-8130c1ccd41d" />
+<img width="1153" height="686" alt="image" src="https://github.com/user-attachments/assets/50789713-66cb-4a84-a13e-5877062ee740" />
+<img width="1163" height="690" alt="image" src="https://github.com/user-attachments/assets/cc1d9928-1ca4-48ba-a1bf-965b479a0277" />
+
 
 ## Problem Statement
 
